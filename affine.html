@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Affine Cipher</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Affine Cipher</h2>
+
+    <label for="inputText">Enter text to encrypt/decrypt:</label>
+    <textarea id="inputText"></textarea>
+
+    <label for="keyA">Key A:</label>
+    <input type="number" id="keyA" value="5" />
+
+    <label for="keyB">Key B:</label>
+    <input type="number" id="keyB" value="8" />
+
+    <button onclick="encrypt()">Encrypt</button>
+    <button onclick="decrypt()">Decrypt</button>
+
+    <label for="outputText">Result:</label>
+    <textarea id="outputText" readonly></textarea>
+
+    <script>
+      function mod(n, m) {
+        return ((n % m) + m) % m;
+      }
+
+      function gcd(a, b) {
+        if (b === 0) return a;
+        else return gcd(b, a % b);
+      }
+
+      function modInverse(a, m) {
+        for (let x = 1; x < m; x++) {
+          if ((a * x) % m == 1) {
+            return x;
+          }
+        }
+        return 1;
+      }
+
+      function encrypt() {
+        const plaintext = document.getElementById("inputText").value;
+        const keyA = parseInt(document.getElementById("keyA").value);
+        const keyB = parseInt(document.getElementById("keyB").value);
+
+        let ciphertext = "";
+
+        for (let i = 0; i < plaintext.length; i++) {
+          const charCode = plaintext.charCodeAt(i);
+          if (charCode >= 65 && charCode <= 90) {
+            // Uppercase letters
+            ciphertext += String.fromCharCode(
+              mod(keyA * (charCode - 65) + keyB, 26) + 65,
+            );
+          } else if (charCode >= 97 && charCode <= 122) {
+            // Lowercase letters
+            ciphertext += String.fromCharCode(
+              mod(keyA * (charCode - 97) + keyB, 26) + 97,
+            );
+          } else {
+            ciphertext += plaintext.charAt(i);
+          }
+        }
+
+        document.getElementById("outputText").value = ciphertext;
+      }
+
+      function decrypt() {
+        const ciphertext = document.getElementById("inputText").value;
+        const keyA = parseInt(document.getElementById("keyA").value);
+        const keyB = parseInt(document.getElementById("keyB").value);
+
+        let plaintext = "";
+
+        const inverseKeyA = modInverse(keyA, 26);
+        const gcdKeyA = gcd(keyA, 26);
+
+        if (gcdKeyA !== 1) {
+          alert("Key A must be chosen such that it's coprime with 26.");
+          return;
+        }
+
+        for (let i = 0; i < ciphertext.length; i++) {
+          const charCode = ciphertext.charCodeAt(i);
+          if (charCode >= 65 && charCode <= 90) {
+            // Uppercase letters
+            plaintext += String.fromCharCode(
+              mod(inverseKeyA * (charCode - 65 - keyB), 26) + 65,
+            );
+          } else if (charCode >= 97 && charCode <= 122) {
+            // Lowercase letters
+            plaintext += String.fromCharCode(
+              mod(inverseKeyA * (charCode - 97 - keyB), 26) + 97,
+            );
+          } else {
+            plaintext += ciphertext.charAt(i);
+          }
+        }
+
+        document.getElementById("outputText").value = plaintext;
+      }
+    </script>
+  </body>
+</html>

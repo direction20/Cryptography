@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Replit</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <h1>Modulo Calculation</h1>
+      </header>
+      <br>
+      <div class="calculator">
+        <label for="nInput">Enter N:</label>
+        <input type="number" id="nInput" placeholder="Enter N" /><br />
+
+        <label for="aInput">Enter a:</label>
+        <input type="number" id="aInput" placeholder="Enter a" /><br />
+
+        <button onclick="calculateMod()">Calculate</button>
+
+        <div id="result">Result:</div>
+      </div>
+
+      <script src="script.js"></script>
+    </main>
+    <style>
+      html,
+      body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      }
+
+      header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+      .calculator {
+        text-align: center;
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      input,
+      button {
+        margin: 10px 0;
+      }
+
+      #result {
+        margin-top: 15px;
+      }
+    </style>
+
+    <script type="module">
+      function calculateMod() {
+        let a = parseInt(document.getElementById("nInput").value);
+        let b = parseInt(document.getElementById("aInput").value);
+
+        b = b / a;
+        b = b - parseInt(b);
+        b = b * a;
+
+        document.getElementById("result").innerText = "Result: " + parseInt(b);
+      }
+    </script>
+
+    <script
+      src="https://replit.com/public/js/replit-badge-v2.js"
+      theme="dark"
+      position="bottom-right"
+    ></script>
+  </body>
+</html>

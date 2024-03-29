@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiplicative Inverse Finder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Multiplicative Inverse Finder</h1>
+    </header>
+
+    <section>
+      <label for="numberInput">Enter a number:</label>
+      <input type="number" id="numberInput" required />
+      <button onclick="calculateMultiplicativeInverse()">
+        Find Multiplicative Inverse
+      </button>
+      <p id="result">Multiplicative Inverse:</p>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    section {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 16px;
+    }
+  </style>
+  <script>
+    function calculateMultiplicativeInverse() {
+      var inputNumber = document.getElementById("numberInput").value;
+      var resultElement = document.getElementById("result");
+
+      var plaintext = parseInt(inputNumber);
+      var inverseExist = false;
+      var result = "";
+
+      for (var i = 0; i < 27; i++) {
+        var inverse = (i * plaintext) % 26;
+        if (inverse === 1) {
+          result = i.toString();
+          inverseExist = true;
+          break;
+        }
+      }
+
+      if (inverseExist) {
+        resultElement.textContent = "Multiplicative Inverse: " + result;
+      } else {
+        resultElement.textContent = "No Inverse Exist";
+      }
+    }
+  </script>
+</html>
